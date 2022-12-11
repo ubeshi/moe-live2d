@@ -1,0 +1,18 @@
+<mat-toolbar>
+  <span>Live2D</span>
+</mat-toolbar>
+
+<div class="d-flex justify-content-end">
+  <mat-form-field appearance="fill">
+    <mat-label>Character Select</mat-label>
+    <mat-select [(value)]="selectedModelName" (selectionChange)="handleCharacterSelectionChanged($event)">
+      <mat-option *ngFor="let modelName of live2dService.getModelNames()" [value]="modelName">
+        {{ modelName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div #canvasContainer class="w-100 overflow-hidden d-flex justify-content-center">
+
+</div>

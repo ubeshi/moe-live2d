@@ -1,37 +1,25 @@
-import { Component } from "@angular/core";
-import { LAppDelegate } from '../../live2d-library/Samples/TypeScript/Demo/src/lappdelegate';
-import * as LAppDefine from '../../live2d-library/Samples/TypeScript/Demo/src/lappdefine';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Live2dService } from '../services/live2d/live2d.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'moe-live2d',
-  template: '',
+  templateUrl: './live2d.component.html',
 })
 export class Live2dComponent {
-  ngOnInit() {
-    /**
-     * ブラウザロード後の処理
-     */
-    window.onload = (): void => {
-      // create the application instance
-      if (LAppDelegate.getInstance().initialize() == false) {
-        return;
-      }
+  @ViewChild('canvasContainer') canvasContainer: ElementRef;
 
-      LAppDelegate.getInstance().run();
-    };
+  public selectedModelName: string;
 
-    /**
-     * 終了時の処理
-     */
-    window.onbeforeunload = (): void => LAppDelegate.releaseInstance();
+  constructor(public live2dService: Live2dService) {
+    this.selectedModelName = live2dService.getModelNames()[0];
+  }
 
-    /**
-     * Process when changing screen size.
-     */
-    window.onresize = () => {
-      if (LAppDefine.CanvasSize === 'auto') {
-        LAppDelegate.getInstance().onResize();
-      }
-    };
+  ngAfterViewInit() {
+    this.live2dService.setCanvasParent(this.canvasContainer.nativeElement);
+  }
+
+  handleCharacterSelectionChanged(selectChange: MatSelectChange): void {
+    this.live2dService.loadModelByName(selectChange.value);
   }
 }
