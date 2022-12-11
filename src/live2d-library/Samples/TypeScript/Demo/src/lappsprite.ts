@@ -140,6 +140,10 @@ export class LAppSprite {
 
       // 頂点バッファ、座標初期化
       {
+        if (this._rect === null) {
+          throw new Error();
+        }
+
         const maxWidth = canvas.width;
         const maxHeight = canvas.height;
 
@@ -171,9 +175,6 @@ export class LAppSprite {
       this._firstDraw = false;
     }
 
-    if (this._rect === null) {
-      throw new Error();
-    }
     if (this._indexArray === null) {
       throw new Error();
     }
