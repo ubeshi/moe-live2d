@@ -234,7 +234,7 @@ export class CubismJson {
     this._lineCount = 0;
     this._root = null;
 
-    if (buffer != undefined) {
+    if (buffer !== undefined && length !== undefined) {
       this.parseBytes(buffer, length, this._parseCallback);
     }
   }
@@ -275,6 +275,9 @@ export class CubismJson {
    * パースしたJSONのルート要素を返す
    */
   public getRoot(): Value {
+    if (this._root === null) {
+      throw new Error();
+    }
     return this._root;
   }
 
@@ -332,7 +335,7 @@ export class CubismJson {
 
       CubismLogInfo('{0}', this._root.getRawString());
       return false;
-    } else if (this._root == null) {
+    } else if (this._root === null) {
       this._root = new JsonError(new csmString(this._error), false); // rootは解放されるのでエラーオブジェクトを別途作成する
       return false;
     }
@@ -350,6 +353,9 @@ export class CubismJson {
    * ルート要素の次の要素がファイルの終端だったらtrueを返す
    */
   public checkEndOfFile(): boolean {
+    if (this._root === null) {
+      throw new Error();
+    }
     return this._root.getArray()[1].equals('EOF');
   }
 
@@ -731,7 +737,7 @@ export class CubismJson {
 
   _error: string; // パース時のエラー
   _lineCount: number; // エラー報告に用いる行数カウント
-  _root: Value; // パースされたルート要素
+  _root: Value | null; // パースされたルート要素
 }
 
 interface parseJsonObject {
