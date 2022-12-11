@@ -35,9 +35,6 @@ export const ResourcesPath = '/assets/Resources/';
 // モデルの後ろにある背景の画像ファイル
 export const BackImageName = 'back_class_normal.png';
 
-// 歯車
-export const GearImageName = 'icon_gear.png';
-
 // 終了ボタン
 export const PowerImageName = 'CloseNormal.png';
 
