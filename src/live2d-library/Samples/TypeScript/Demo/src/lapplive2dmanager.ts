@@ -205,6 +205,15 @@ export class LAppLive2DManager {
     }
   }
 
+  public loadModelByName(modelName: string): void {
+    const modelPath = `${LAppDefine.ResourcesPath}${modelName}/`;
+    const modelJsonName = `${modelName}.model3.json`;
+
+    this.releaseAllModel();
+    this._models.pushBack(new LAppModel());
+    this._models.at(0).loadAssets(modelPath, modelJsonName);
+  }
+
   /**
    * コンストラクタ
    */

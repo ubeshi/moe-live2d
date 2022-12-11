@@ -349,8 +349,8 @@ export class LAppDelegate {
       throw new Error();
     }
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = canvas.parentElement?.clientWidth ?? window.innerWidth;
+    canvas.height = canvas.parentElement?.clientHeight ?? window.innerHeight;
   }
 }
 
