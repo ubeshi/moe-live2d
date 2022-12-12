@@ -3,7 +3,6 @@ extends:
   - plugin:@typescript-eslint/eslint-recommended
   - plugin:@typescript-eslint/recommended
   - plugin:@typescript-eslint/recommended-requiring-type-checking
-  - plugin:prettier/recommended
 plugins:
   - '@typescript-eslint'
 parser: '@typescript-eslint/parser'
@@ -12,9 +11,6 @@ parserOptions:
   ecmaVersion: 2020
   project: ./tsconfig.json
 rules:
-  prettier/prettier:
-    - error
-    - singleQuote: true
   camelcase: "off"
   '@typescript-eslint/naming-convention':
     - warn

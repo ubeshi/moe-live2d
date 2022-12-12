@@ -2,7 +2,7 @@
   <span>Live2D</span>
 </mat-toolbar>
 
-<div class="d-flex justify-content-end">
+<div class="px-5 py-2 d-flex justify-content-between align-items-center">
   <mat-form-field appearance="fill">
     <mat-label>Character Select</mat-label>
     <mat-select [(value)]="selectedModelName" (selectionChange)="handleCharacterSelectionChanged($event)">
@@ -11,6 +11,39 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <button mat-button [matMenuTriggerFor]="expressionsMenu">Expressions</button>
+  <mat-menu #expressionsMenu="matMenu">
+    <mat-label *ngIf="expressionNames.length === 0" class="px-2">
+      No expressions available
+    </mat-label>
+    <button mat-menu-item *ngFor="let expressionName of expressionNames"
+      (click)="handleExpressionClicked(expressionName)"
+    >
+      {{ expressionName }}
+    </button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="motionGroupsMenu">Motions</button>
+  <mat-menu #motionGroupsMenu="matMenu">
+    <mat-label *ngIf="motionGroupNames.length === 0" class="px-2">
+      No motions available
+    </mat-label>
+    <button mat-menu-item *ngFor="let motionGroupName of motionGroupNames"
+      (mouseover)="handleMotionGroupClicked(motionGroupName)"
+      [matMenuTriggerFor]="motionsMenu"
+    >
+      {{ motionGroupName }}
+    </button>
+  </mat-menu>
+
+  <mat-menu #motionsMenu="matMenu">
+    <button mat-menu-item *ngFor="let motionName of motionNames; let index = index"
+      (click)="handleMotionClicked(selectedMotionGroupName, index)"
+    >
+      {{ motionName }}
+    </button>
+  </mat-menu>
 </div>
 
 <div #canvasContainer class="w-100 overflow-hidden d-flex justify-content-center">
