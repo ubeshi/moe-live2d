@@ -6,7 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Live2dComponent } from './live2d/live2d.component';
 
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -19,7 +21,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
+    MatButtonModule,
     MatFormFieldModule,
+    MatMenuModule,
     MatSelectModule,
     MatToolbarModule,
   ],

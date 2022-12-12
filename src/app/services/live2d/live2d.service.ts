@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { LAppLive2DManager } from 'src/live2d-library/Samples/TypeScript/Demo/src/lapplive2dmanager';
 import { LAppDelegate, canvas } from 'src/live2d-library/Samples/TypeScript/Demo/src/lappdelegate';
 import * as LAppDefine from 'src/live2d-library/Samples/TypeScript/Demo/src/lappdefine';
-
+import { csmVector } from 'src/live2d-library/Framework/src/type/csmvector';
+import { LAppModel } from 'src/live2d-library/Samples/TypeScript/Demo/src/lappmodel';
+import { getRange } from 'src/utilities/array/array-utilities';
 
 enum ModelName {
   HARU = 'Haru',
@@ -54,7 +56,32 @@ export class Live2dService {
     element.appendChild(canvas);
   }
 
-  loadModelByName(modelName: string): void {
-    this.live2dManager.loadModelByName(modelName);
+  loadModelByName(modelName: string): Promise<void> {
+    return this.live2dManager.loadModelByName(modelName);
+  }
+
+  getLoadedModels(): csmVector<LAppModel> {
+    return this.live2dManager._models;
+  }
+
+  getModelExpressionNames(model: LAppModel): string[] {
+    return model._expressions._keyValues
+      .filter((keyValue) => keyValue !== undefined)
+      .map((keyValue) => keyValue.first)
+      .sort((nameA, nameB) => nameA.localeCompare(nameB));
+  }
+
+  getModelMotionGroupNames(model: LAppModel): string[] {
+    const modelSetting = model._modelSetting;
+    const motionGroupCount = modelSetting.getMotionGroupCount();
+    const range = getRange(motionGroupCount);
+    return range.map((index) => modelSetting.getMotionGroupName(index));
+  }
+
+  getModelMotionNames(model: LAppModel, motionGroupName: string): string[] {
+    const modelSetting = model._modelSetting;
+    const motionCount = modelSetting.getMotionCount(motionGroupName);
+    const range = getRange(motionCount);
+    return range.map((index) => modelSetting.getMotionFileName(motionGroupName, index));
   }
 }

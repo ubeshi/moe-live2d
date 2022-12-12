@@ -205,13 +205,13 @@ export class LAppLive2DManager {
     }
   }
 
-  public loadModelByName(modelName: string): void {
+  public async loadModelByName(modelName: string): Promise<void> {
     const modelPath = `${LAppDefine.ResourcesPath}${modelName}/`;
     const modelJsonName = `${modelName}.model3.json`;
 
     this.releaseAllModel();
     this._models.pushBack(new LAppModel());
-    this._models.at(0).loadAssets(modelPath, modelJsonName);
+    await this._models.at(0).loadAssets(modelPath, modelJsonName);
   }
 
   /**
@@ -221,7 +221,6 @@ export class LAppLive2DManager {
     this._viewMatrix = new CubismMatrix44();
     this._models = new csmVector<LAppModel>();
     this._sceneIndex = 0;
-    this.changeScene(this._sceneIndex);
   }
 
   _viewMatrix: CubismMatrix44; // モデル描画に用いるview行列
