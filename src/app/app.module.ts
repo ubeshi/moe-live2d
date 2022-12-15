@@ -11,11 +11,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { TwoDimensionalSliderComponent } from './two-dimensional-slider/two-dimensional-slider.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     Live2dComponent,
+    TwoDimensionalSliderComponent,
   ],
   imports: [
     BrowserAnimationsModule,

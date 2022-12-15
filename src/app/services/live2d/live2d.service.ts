@@ -5,6 +5,8 @@ import * as LAppDefine from 'src/live2d-library/Samples/TypeScript/Demo/src/lapp
 import { csmVector } from 'src/live2d-library/Framework/src/type/csmvector';
 import { LAppModel } from 'src/live2d-library/Samples/TypeScript/Demo/src/lappmodel';
 import { getRange } from 'src/utilities/array/array-utilities';
+import { csmString } from 'src/live2d-library/Framework/src/type/csmstring';
+import { CubismFramework } from 'src/live2d-library/Framework/src/live2dcubismframework';
 
 enum ModelName {
   HARU = 'Haru',
@@ -83,5 +85,9 @@ export class Live2dService {
     const motionCount = modelSetting.getMotionCount(motionGroupName);
     const range = getRange(motionCount);
     return range.map((index) => modelSetting.getMotionFileName(motionGroupName, index));
+  }
+
+  setModelFaceTarget(model: LAppModel, targetX: number, targetY: number): void {
+    model.setDragging(targetX, targetY);
   }
 }
