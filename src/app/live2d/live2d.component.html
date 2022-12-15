@@ -12,6 +12,11 @@
     </mat-select>
   </mat-form-field>
 
+  <moe-2d-slider
+    [value]="{ x: 0.5, y: 0.5 }"
+    (valueChanged)="handleLookDirectionChanged($event)"
+  ></moe-2d-slider>
+
   <button mat-button [matMenuTriggerFor]="expressionsMenu">Expressions</button>
   <mat-menu #expressionsMenu="matMenu">
     <mat-label *ngIf="expressionNames.length === 0" class="px-2">

@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Live2dService } from '../services/live2d/live2d.service';
 import { MatSelectChange } from '@angular/material/select';
+import { Vector2D } from '../two-dimensional-slider/two-dimensional-slider.component';
 
 @Component({
   selector: 'moe-live2d',
@@ -50,5 +51,15 @@ export class Live2dComponent {
   handleMotionClicked(motionGroupName: string, motionIndex: number): void {
     const model = this.live2dService.getLoadedModels().at(0);
     model.startMotion(motionGroupName, motionIndex, 2);
+  }
+
+  handleLookDirectionChanged(vector2d: Vector2D) {
+    const model = this.live2dService.getLoadedModels().at(0);
+    const { x, y } = vector2d;
+
+    const lookX = x * 2 - 1;
+    const lookY = -(y * 2 - 1);
+
+    this.live2dService.setModelFaceTarget(model, lookX, lookY);
   }
 }

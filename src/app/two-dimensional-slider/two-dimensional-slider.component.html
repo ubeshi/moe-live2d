@@ -1,0 +1,8 @@
+<div class="d-flex flex-column">
+  <div class="marker-bounds" (dragover)="$event.preventDefault()" (drop)="$event.preventDefault()">
+    <div class="marker" draggable="true" (drag)="drag($event)"
+      [ngStyle]="{ 'top': markerTop, 'left': markerLeft }"></div>
+  </div>
+  <div><span>x: {{ x }}</span></div>
+  <div><span>y: {{ y }}</span></div>
+</div>

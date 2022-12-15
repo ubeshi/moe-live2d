@@ -84,4 +84,8 @@ export class Live2dService {
     const range = getRange(motionCount);
     return range.map((index) => modelSetting.getMotionFileName(motionGroupName, index));
   }
+
+  setModelFaceTarget(model: LAppModel, targetX: number, targetY: number): void {
+    model.setDragging(targetX, targetY);
+  }
 }

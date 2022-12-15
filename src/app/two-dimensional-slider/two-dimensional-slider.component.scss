@@ -1,0 +1,19 @@
+.marker-bounds {
+  min-width: 200px;
+  min-height: 200px;
+  outline: 1px solid white;
+}
+
+.marker {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  position: relative;
+  transform: translateX(-50%) translateY(-50%);
+  cursor: grab !important;
+}
+
+.marker:active {
+  cursor: grabbing !important;
+}
