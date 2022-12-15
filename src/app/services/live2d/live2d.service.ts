@@ -5,8 +5,6 @@ import * as LAppDefine from 'src/live2d-library/Samples/TypeScript/Demo/src/lapp
 import { csmVector } from 'src/live2d-library/Framework/src/type/csmvector';
 import { LAppModel } from 'src/live2d-library/Samples/TypeScript/Demo/src/lappmodel';
 import { getRange } from 'src/utilities/array/array-utilities';
-import { csmString } from 'src/live2d-library/Framework/src/type/csmstring';
-import { CubismFramework } from 'src/live2d-library/Framework/src/live2dcubismframework';
 
 enum ModelName {
   HARU = 'Haru',

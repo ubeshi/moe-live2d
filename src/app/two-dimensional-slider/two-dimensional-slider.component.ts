@@ -100,7 +100,7 @@ export class TwoDimensionalSliderComponent implements OnChanges {
     return value;
   }
 
-  getRoundedValue(value: number, precision: number) {
+  getRoundedValue(value: number, precision: number): number {
     const powerOfTen = Math.pow(10, precision)
     return Math.round(value * powerOfTen) / powerOfTen;
   }
