@@ -556,6 +556,9 @@ export class LAppModel extends CubismUserModel {
   }
 
   public updateWithOverridesOnly(): void {
+    if (this._state != LoadStep.CompleteSetup) {
+      return;
+    }
     this.setOverriddenParams(this._model);
     this._model.update();
   }
