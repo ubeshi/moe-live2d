@@ -8,6 +8,7 @@ import { MatButtonToggleChange } from '@angular/material/button-toggle';
 @Component({
   selector: 'moe-live2d',
   templateUrl: './live2d.component.html',
+  styleUrls: ['./live2d.component.scss'],
 })
 export class Live2dComponent {
   @ViewChild('canvasContainer') canvasContainer: ElementRef;
