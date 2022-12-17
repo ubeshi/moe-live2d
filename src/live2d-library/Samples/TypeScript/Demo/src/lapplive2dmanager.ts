@@ -16,6 +16,11 @@ import { LAppPal } from './lapppal';
 
 export let s_instance: LAppLive2DManager | null = null;
 
+export enum UpdateMode {
+  AUTOMATIC = 'automatic',
+  MANUAL = 'manual',
+}
+
 /**
  * サンプルアプリケーションにおいてCubismModelを管理するクラス
  * モデル生成と破棄、タップイベントの処理、モデル切り替えを行う。
@@ -162,9 +167,22 @@ export class LAppLive2DManager {
         }
       }
 
-      model.update();
+      if (this._updateMode === UpdateMode.AUTOMATIC) {
+        model.update();
+      } else if (this._updateMode === UpdateMode.MANUAL) {
+        model.updateWithOverridesOnly();
+      }
+      
       model.draw(projection); // 参照渡しなのでprojectionは変質する。
     }
+  }
+
+  getUpdateMode(): UpdateMode {
+    return this._updateMode;
+  }
+
+  setUpdateMode(updateMode: UpdateMode): void {
+    this._updateMode = updateMode;
   }
 
   /**
@@ -226,6 +244,7 @@ export class LAppLive2DManager {
   _viewMatrix: CubismMatrix44; // モデル描画に用いるview行列
   _models: csmVector<LAppModel>; // モデルインスタンスのコンテナ
   _sceneIndex: number; // 表示するシーンのインデックス値
+  _updateMode = UpdateMode.AUTOMATIC;
   // モーション再生終了のコールバック関数
   _finishedMotion = (self: ACubismMotion): void => {
     LAppPal.printMessage('Motion Finished:');
