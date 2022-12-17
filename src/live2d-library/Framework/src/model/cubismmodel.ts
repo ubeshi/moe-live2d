@@ -416,6 +416,10 @@ export class CubismModel {
     return this._model.parameters.count;
   }
 
+  public getParameters(): Live2DCubismCore.Parameters {
+    return this._model.parameters;
+  }
+
   /**
    * パラメータの種類の取得
    * @param parameterIndex パラメータのインデックス

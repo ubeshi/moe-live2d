@@ -44,6 +44,7 @@ import { canvas, frameBuffer, gl, LAppDelegate } from './lappdelegate';
 import { LAppPal } from './lapppal';
 import { TextureInfo } from './lapptexturemanager';
 import { LAppWavFileHandler } from './lappwavfilehandler';
+import { CubismModel } from 'src/live2d-library/Framework/src/model/cubismmodel';
 
 enum LoadStep {
   LoadAssets,
@@ -76,6 +77,11 @@ enum LoadStep {
  * モデル生成、機能コンポーネント生成、更新処理とレンダリングの呼び出しを行う。
  */
 export class LAppModel extends CubismUserModel {
+  public override loadModel(buffer: ArrayBuffer): void {
+    super.loadModel(buffer);
+    this.initializeOverriddenParams();
+  }
+
   /**
    * model3.jsonが置かれたディレクトリとファイルパスからモデルを生成する
    * @param dir
@@ -522,11 +528,6 @@ export class LAppModel extends CubismUserModel {
       this._breath.updateParameters(this._model, deltaTimeSeconds);
     }
 
-    // 物理演算の設定
-    if (this._physics != null) {
-      this._physics.evaluate(this._model, deltaTimeSeconds);
-    }
-
     // リップシンクの設定
     if (this._lipsync) {
       let value = 0.0; // リアルタイムでリップシンクを行う場合、システムから音量を取得して、0~1の範囲で値を入力します。
@@ -544,7 +545,50 @@ export class LAppModel extends CubismUserModel {
       this._pose.updateParameters(this._model, deltaTimeSeconds);
     }
 
+    this.addOverriddenParams(this._model);
+
+    // 物理演算の設定
+    if (this._physics != null) {
+      this._physics.evaluate(this._model, deltaTimeSeconds);
+    }
+
     this._model.update();
+  }
+
+  public updateWithOverridesOnly(): void {
+    if (this._state != LoadStep.CompleteSetup) {
+      return;
+    }
+    this.setOverriddenParams(this._model);
+    this._model.update();
+  }
+
+  public overrideParameterValueByName(parameterName: string, value: number): void {
+    this._overriddenParams.set(parameterName, value);
+  }
+
+  private addOverriddenParams(model: CubismModel): void {
+    this._overriddenParams.forEach((value, parameterName) => {
+      const cubismId = CubismFramework.getIdManager().getId(parameterName);
+      model.addParameterValueById(cubismId, value);
+    });    
+  }
+
+  private setOverriddenParams(model: CubismModel): void {
+    this._overriddenParams.forEach((value, parameterName) => {
+      const cubismId = CubismFramework.getIdManager().getId(parameterName);
+      model.setParameterValueById(cubismId, value);
+    });  
+  }
+
+  private initializeOverriddenParams(): void {
+    const parameters = this._model.getParameters();
+    const range = getRange(parameters.count);
+    range.forEach((paramIndex) => {
+      const paramId = parameters.ids[paramIndex];
+      const defaultValue = parameters.defaultValues[paramIndex];
+      this._overriddenParams.set(paramId, defaultValue);
+    });
   }
 
   /**
@@ -942,4 +986,5 @@ export class LAppModel extends CubismUserModel {
   _motionCount: number; // モーションデータカウント
   _allMotionCount: number; // モーション総数
   _wavFileHandler: LAppWavFileHandler; //wavファイルハンドラ
+  _overriddenParams: Map<string, number> = new Map();
 }
