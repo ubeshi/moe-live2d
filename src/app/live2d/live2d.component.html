@@ -35,6 +35,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>
+          <button mat-raised-button class="my-2" (click)="handleResetParamsClicked()">Reset To Default</button>
           <div *ngFor="let parameter of parameters">
             <div>{{ parameter.id }}</div>
             <mat-slider discrete
@@ -44,7 +45,7 @@
             >
               <input matSliderThumb
                 [value]="parameter.value"
-                (valueChange)="handleParameterSliderValueChanged(parameter.id, $event)"
+                (valueChange)="handleParameterSliderValueChanged(parameter, $event)"
               >
             </mat-slider>
           </div>

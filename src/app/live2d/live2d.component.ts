@@ -17,7 +17,7 @@ export class Live2dComponent {
   public expressionNames = [];
   public motionGroupNames = [];
   public motionNames = [];
-  public parameters = [];
+  public parameters: Live2dParameter[] = [];
   public updateMode: UpdateMode;
   public UpdateMode = UpdateMode;
 
@@ -70,13 +70,22 @@ export class Live2dComponent {
     this.live2dService.setModelFaceTarget(model, lookX, lookY);
   }
 
-  handleParameterSliderValueChanged(parameterId: string, value: number): void {
+  handleParameterSliderValueChanged(parameter: Live2dParameter, value: number): void {
     const model = this.live2dService.getLoadedModels().at(0);
-    this.live2dService.setModelParameterValue(model, parameterId, value);
+    this.live2dService.setModelParameterValue(model, parameter.id, value);
+    parameter.value = value;
   }
 
   handleUpdateModeChanged(change: MatButtonToggleChange): void {
     console.log(change);
     this.live2dService.setUpdateMode(change.value);
+  }
+
+  handleResetParamsClicked(): void {
+    const model = this.live2dService.getLoadedModels().at(0);
+    this.parameters.map((param) => {
+      this.live2dService.setModelParameterValue(model, param.id, param.defaultValue);
+      param.value = param.defaultValue;
+    });
   }
 }
