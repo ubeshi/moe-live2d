@@ -77,7 +77,7 @@ export class Live2dComponent {
   }
 
   handleUpdateModeChanged(change: MatButtonToggleChange): void {
-    console.log(change);
+    this.updateMode = change.value;
     this.live2dService.setUpdateMode(change.value);
   }
 

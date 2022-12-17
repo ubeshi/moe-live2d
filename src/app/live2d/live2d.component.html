@@ -53,12 +53,12 @@
       </mat-expansion-panel>
     </mat-accordion>
   
-    <moe-2d-slider
+    <moe-2d-slider *ngIf="updateMode === UpdateMode.AUTOMATIC"
       [value]="{ x: 0.5, y: 0.5 }"
       (valueChanged)="handleLookDirectionChanged($event)"
     ></moe-2d-slider>
   
-    <button mat-button [matMenuTriggerFor]="expressionsMenu">Expressions</button>
+    <button mat-button *ngIf="updateMode === UpdateMode.AUTOMATIC" [matMenuTriggerFor]="expressionsMenu">Expressions</button>
     <mat-menu #expressionsMenu="matMenu">
       <mat-label *ngIf="expressionNames.length === 0" class="px-2">
         No expressions available
@@ -70,7 +70,7 @@
       </button>
     </mat-menu>
   
-    <button mat-button [matMenuTriggerFor]="motionGroupsMenu">Motions</button>
+    <button mat-button *ngIf="updateMode === UpdateMode.AUTOMATIC" [matMenuTriggerFor]="motionGroupsMenu">Motions</button>
     <mat-menu #motionGroupsMenu="matMenu">
       <mat-label *ngIf="motionGroupNames.length === 0" class="px-2">
         No motions available
